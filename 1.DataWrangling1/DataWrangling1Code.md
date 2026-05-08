@@ -162,6 +162,14 @@ df.head()
 ---
 
 ## 🔹 **Basic Questions**
+* What is Data Science?
+:data Science is the field of extracting useful information and insights from data using:
+
+* What is Pandas?
+:pandas is a Python library used for data manipulation and analysis.
+
+* What is NumPy?
+:NumPy is a Python library used for numerical and mathematical operations.
 
 ### 1. What is Data Wrangling?
 
