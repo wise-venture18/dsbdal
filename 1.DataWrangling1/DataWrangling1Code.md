@@ -18,11 +18,11 @@ explain everything that you do to import/read/scrape the data set.
 * Dataset Download Link (Titatnic) : https://www.kaggle.com/datasets/yasserh/titanic-dataset?resource=download
 ---
 
-# 📘 **Data Wrangling Program (Cell-wise)**
+# 📘 PS1: Data Wrangling I
 
 ---
 
-## 🔹 **Cell 1: Import Libraries**
+## 🔹 Cell 1: Import Libraries
 
 ```python
 import pandas as pd
@@ -31,10 +31,9 @@ import numpy as np
 
 ---
 
-## 🔹 **Cell 2: Load Dataset**
+## 🔹 Cell 2: Load Dataset
 
 ```python
-# Make sure titanic.csv is in same folder
 df = pd.read_csv("titanic.csv")
 
 df.head()
@@ -42,85 +41,107 @@ df.head()
 
 ---
 
-## 🔹 **Cell 3: Basic Info & Dimensions**
+## 🔹 Cell 3: Basic Info & Dimensions
 
 ```python
 print("Shape:", df.shape)
+
 df.info()
 ```
 
 ---
 
-## 🔹 **Cell 4: Missing Values**
+## 🔹 Cell 4: Missing Values Check
 
 ```python
-df.isnull().sum()
+print(df.isnull().sum())
 ```
 
 ---
 
-## 🔹 **Cell 5: Statistical Summary**
+## 🔹 Cell 5: Statistical Summary
 
 ```python
-df.describe()
+df.describe(include='all')
+```
+
+**Upgrade:** Includes categorical columns too.
+
+---
+
+## 🔹 Cell 6: Data Types
+
+```python
+print(df.dtypes)
 ```
 
 ---
 
-## 🔹 **Cell 6: Data Types**
+## 🔹 Cell 7: Handle Missing Values
 
 ```python
-df.dtypes
+df['Age'] = df['Age'].fillna(df['Age'].mean())
+
+df['Embarked'] = df['Embarked'].fillna(df['Embarked'].mode()[0])
+
+df['Cabin'] = df['Cabin'].fillna('Unknown')
 ```
+
 
 ---
 
-## 🔹 **Cell 7: Handle Missing Values (IMPORTANT)**
+## 🔹 Cell 8: Verify Missing Values Removed
 
 ```python
-df['Age'].fillna(df['Age'].mean(), inplace=True)
-df['Embarked'].fillna(df['Embarked'].mode()[0], inplace=True)
-df['Cabin'].fillna('Unknown', inplace=True)
+print(df.isnull().sum())
 ```
+
 
 ---
 
-## 🔹 **Cell 8: Data Type Conversion**
+## 🔹 Cell 9: Data Type Conversion
 
 ```python
 df['Age'] = df['Age'].astype(float)
+
 df['Survived'] = df['Survived'].astype(int)
 ```
 
 ---
 
-## 🔹 **Cell 9: Normalization**
+## 🔹 Cell 10: Data Normalization
 
 ```python
-df['Age_norm'] = (df['Age'] - df['Age'].min()) / (df['Age'].max() - df['Age'].min())
+df['Age_norm'] = (
+    (df['Age'] - df['Age'].min()) /
+    (df['Age'].max() - df['Age'].min())
+)
+
+df[['Age', 'Age_norm']].head()
 ```
 
 ---
 
-## 🔹 **Cell 10: Convert Categorical → Numerical**
-
-### ✔ Label Encoding
+## 🔹 Cell 11: Convert Categorical → Numerical
 
 ```python
-df['Sex'] = df['Sex'].map({'male': 0, 'female': 1})
-```
+# Label Encoding
+df['Sex'] = df['Sex'].map({
+    'male': 0,
+    'female': 1
+})
 
-### ✔ One Hot Encoding (Run ONLY ONCE)
-
-```python
+# One Hot Encoding
 df = pd.get_dummies(df, columns=['Embarked'])
 ```
 
 ---
 
-## 🔹 **Cell 11: Final Output**
+## 🔹 Cell 12: Final Output
 
 ```python
+print("Final Shape:", df.shape)
+
 df.head()
 ```
 
